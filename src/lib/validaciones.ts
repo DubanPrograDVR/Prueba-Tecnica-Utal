@@ -3,7 +3,7 @@
 
 export type Errores = Record<string, string>
 
-export const MINIMO_CARACTERES = 10
+const MINIMO_CARACTERES = 10
 
 function textoObligatorio(texto: string, que: string): string | undefined {
   const limpio = texto.trim()

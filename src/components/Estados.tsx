@@ -8,14 +8,14 @@ import { Link } from 'react-router'
 import s from './Estados.module.css'
 
 /** Carga: la misma estructura final con barras grises a su tamaño real, sin shimmer. */
-export function SkeletonLista({ filas = 6 }: { filas?: number }) {
+export function SkeletonLista() {
   return (
     <div className={s.skeleton} aria-busy="true" aria-label="Cargando">
       <span className={s.barraTitulo} />
       <span className={s.barraSub} />
       <span className={s.barraFiltros} />
       <ul role="list" className={s.panel}>
-        {Array.from({ length: filas }, (_, i) => (
+        {Array.from({ length: 6 }, (_, i) => (
           <li key={i} className={s.fila}>
             <span className={s.cuadro} />
             <span className={s.lineas}>
