@@ -39,21 +39,31 @@
   background: var(--surface);
 }
 
+/* Teléfono: solo el nombre va junto al mosaico; meta y descripción usan todo el ancho. */
+.titulo {
+  display: contents;
+}
+
 .titulo h1 {
+  align-self: center;
   font-size: var(--fs-title);
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.01em;
 }
 
+.meta,
+.descripcion {
+  grid-column: 1 / -1;
+}
+
 .meta {
-  margin-top: 4px;
+  margin-top: -4px;
   color: var(--muted);
   font-size: var(--fs-small);
 }
 
 .descripcion {
-  margin-top: 12px;
   max-width: 60ch;
 }
 
@@ -266,6 +276,18 @@
 
   .acciones {
     grid-column: auto;
+  }
+
+  .titulo {
+    display: block;
+  }
+
+  .meta {
+    margin-top: 4px;
+  }
+
+  .descripcion {
+    margin-top: 12px;
   }
 }
 
