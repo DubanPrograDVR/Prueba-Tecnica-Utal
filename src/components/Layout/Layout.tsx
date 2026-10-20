@@ -2,6 +2,7 @@ import { faStore, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { ReactNode } from 'react'
 import { Link, NavLink } from 'react-router'
+import logoUtalca from '../../assets/logo-utalca.png'
 import { useDatos } from '../../state/DatosContext'
 import s from './Layout.module.css'
 import { Avatar } from '../Mosaico/Mosaico'
@@ -26,22 +27,15 @@ export function Layout({ children }: { children: ReactNode }) {
 
       <aside className={s.lateral}>
         <Link to="/emprendimientos" className={s.marca}>
-          {/* Sello propio: una persona dentro de la "U" (la comunidad del campus). */}
-          <svg className={s.sello} viewBox="0 0 32 32" aria-hidden="true">
-            <rect width="32" height="32" rx="8" fill="currentColor" />
-            <path
-              d="M9.5 9v7.5a6.5 6.5 0 0 0 13 0V9"
-              fill="none"
-              stroke="#fff"
-              strokeWidth="3"
-              strokeLinecap="round"
-            />
-            <circle cx="16" cy="11.5" r="2.6" fill="#fff" />
-          </svg>
-          <span>
-            <strong>Comunidad UTalca</strong>
-            <small>Universidad de Talca</small>
-          </span>
+          {/* Logo oficial de la Universidad de Talca (ver README, sección Diseño). */}
+          <img
+            src={logoUtalca}
+            alt="Universidad de Talca"
+            className={s.logo}
+            width="32"
+            height="40"
+          />
+          <strong>Comunidad UTalca</strong>
         </Link>
 
         <nav aria-label="Secciones" className={s.nav}>

@@ -147,6 +147,7 @@ Supuestos:
 ## Diseño
 
 - **Identidad visual:** rojo institucional `#c00418` y tipografía Inter, tomados de la hoja de estilos de utalca.cl.
+- **Logo:** `src/assets/logo-utalca.png` es el logo oficial de la Universidad de Talca, descargado de utalca.cl y recortado para quitarle el lema. Es una marca de la universidad y se usa aquí solo con fines de esta prueba técnica.
 - **Estilo de pantallas de aplicación** ("pastel consumer") con reglas explícitas: sin degradados, sin sombras en elementos en reposo, el color reservado para los datos y la acción principal.
 - **Ningún emprendimiento trae fotos.** Por eso cada uno se identifica con sus iniciales sobre el tinte pálido de su categoría. El color refuerza, pero el nombre de la categoría siempre aparece también como texto.
 - **Las categorías y temáticas se filtran con chips de su propio tinte**, y cada chip muestra un conteo que sigue a los demás filtros. Así el rasgo visual de la app es también la forma de navegarla. La barra de ocupación de cada grupo toma el tono de su temática.

@@ -50,17 +50,11 @@
   line-height: 1.2;
 }
 
-.marca small {
-  display: none;
-  color: var(--muted);
-  font-size: var(--fs-meta);
-}
-
-.sello {
+/* Logo vertical (proporción 360×445): alto fijo, ancho automático. */
+.logo {
   flex: none;
-  width: 32px;
-  height: 32px;
-  color: var(--brand);
+  width: auto;
+  height: 40px;
 }
 
 /* Navegación inferior en el teléfono */
@@ -140,11 +134,12 @@
   }
 
   .marca {
+    gap: 12px;
     padding: 0 8px;
   }
 
-  .marca small {
-    display: block;
+  .logo {
+    height: 56px;
   }
 
   .nav {
