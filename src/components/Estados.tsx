@@ -4,6 +4,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { ReactNode } from 'react'
+import { Link } from 'react-router'
 import s from './Estados.module.css'
 
 /** Carga: la misma estructura final con barras grises a su tamaño real, sin shimmer. */
@@ -65,6 +66,24 @@ export function EstadoVacio({
     <div className={s.vacio}>
       <p>{children}</p>
       {accion}
+    </div>
+  )
+}
+
+/** 404: ruta desconocida o un emprendimiento que no existe. */
+export function NoEncontrado({ mensaje }: { mensaje: string }) {
+  return (
+    <div className={s.noEncontrado}>
+      <h1>No encontramos esta página</h1>
+      <EstadoVacio
+        accion={
+          <Link to="/emprendimientos" className="btn">
+            Ver emprendimientos
+          </Link>
+        }
+      >
+        {mensaje}
+      </EstadoVacio>
     </div>
   )
 }

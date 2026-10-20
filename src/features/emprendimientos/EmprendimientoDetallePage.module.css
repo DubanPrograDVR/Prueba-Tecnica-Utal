@@ -1,0 +1,288 @@
+/*
+  Teléfono: cabecera, contacto (la acción sube), precios y recomendaciones.
+  Desde 1024px: recomendaciones en 2/3 a la izquierda; contacto y precios en 1/3.
+*/
+.pagina {
+  display: grid;
+  gap: 16px;
+  max-width: 1360px;
+}
+
+.volver {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px 0 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.volver svg {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--t-press) var(--ease-out);
+}
+
+/* ── Cabecera: el objeto mismo ───────────────────────────── */
+.cabecera {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 16px;
+  padding: 20px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.titulo h1 {
+  font-size: var(--fs-title);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.meta {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: var(--fs-small);
+}
+
+.descripcion {
+  margin-top: 12px;
+  max-width: 60ch;
+}
+
+.acciones {
+  display: flex;
+  grid-column: 1 / -1;
+  gap: 8px;
+}
+
+.toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.toggle[aria-pressed='true'] {
+  border-color: var(--text);
+}
+
+.toggle:first-child[aria-pressed='true'] {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+.toggle[aria-pressed='true'] svg {
+  transition: transform 220ms var(--ease-out);
+
+  @starting-style {
+    transform: scale(0.6);
+  }
+}
+
+/* ── Cuerpo ───────────────────────────────────────────────── */
+.cuerpo {
+  display: grid;
+  gap: 16px;
+  align-items: start;
+}
+
+.lateral {
+  display: grid;
+  gap: 16px;
+}
+
+.panel {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.panel h2 {
+  font-size: var(--fs-section);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.canales {
+  display: grid;
+  gap: 8px;
+}
+
+.canal {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  transition:
+    transform var(--t-press) var(--ease-out),
+    background-color var(--t-hover) ease;
+}
+
+.canal:active {
+  transform: scale(0.98);
+}
+
+.canal span {
+  display: grid;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.canal strong {
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+.canal small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: var(--fs-meta);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.iconoCanal {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  color: var(--text);
+}
+
+.precio {
+  font-weight: 500;
+}
+
+/* ── Recomendaciones ─────────────────────────────────────── */
+.resumen {
+  display: grid;
+  gap: 8px;
+}
+
+.promedio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.cifra {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.total,
+.sinResenas {
+  color: var(--muted);
+  font-size: var(--fs-small);
+}
+
+.listaResenas {
+  display: grid;
+}
+
+.resena {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 12px;
+  padding: 16px 0;
+}
+
+.resena + .resena {
+  border-top: 1px solid var(--rule);
+}
+
+/* Solo la reseña recién publicada entra con movimiento: indica el cambio. */
+.nueva {
+  transition:
+    opacity 300ms var(--ease-out),
+    transform 300ms var(--ease-out);
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.autor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-bottom: 4px;
+  font-size: var(--fs-small);
+}
+
+.autor strong {
+  font-weight: 600;
+}
+
+.autor time {
+  color: var(--muted);
+  font-size: var(--fs-meta);
+}
+
+.comentario {
+  margin-top: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nueva,
+  .toggle[aria-pressed='true'] svg {
+    transition: none;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .volver:hover {
+    color: var(--text);
+  }
+  .volver:hover svg {
+    transform: translateX(-2px);
+  }
+  .canal:hover {
+    background: var(--raised);
+  }
+}
+
+@media (min-width: 640px) {
+  .cabecera {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    align-items: start;
+    padding: 24px;
+  }
+
+  .acciones {
+    grid-column: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cuerpo {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .lateral {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .resenas {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 24px;
+  }
+}

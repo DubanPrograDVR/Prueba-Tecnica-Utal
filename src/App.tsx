@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
-import { EstadoError, SkeletonLista } from './components/Estados'
+import { Toaster } from 'sonner'
+import { EstadoError, NoEncontrado, SkeletonLista } from './components/Estados'
 import { Layout } from './components/Layout'
 import { EmprendimientoDetallePage } from './features/emprendimientos/EmprendimientoDetallePage'
 import { EmprendimientosPage } from './features/emprendimientos/EmprendimientosPage'
@@ -28,11 +29,22 @@ export function App() {
                 element={<EmprendimientoDetallePage />}
               />
               <Route path="/grupos" element={<GruposPage />} />
-              <Route path="*" element={<p>Página no encontrada</p>} />
+              <Route
+                path="*"
+                element={
+                  <NoEncontrado mensaje="La dirección que abriste no existe." />
+                }
+              />
             </Routes>
           </ConDatos>
         </Layout>
       </DatosProvider>
+      {/* Confirmaciones (Sonner): sobre la barra de navegación inferior del teléfono. */}
+      <Toaster
+        position="bottom-center"
+        offset={24}
+        mobileOffset={{ bottom: 88 }}
+      />
     </BrowserRouter>
   )
 }
