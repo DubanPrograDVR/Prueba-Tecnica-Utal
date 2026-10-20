@@ -10,8 +10,23 @@ import {
 import { obtenerDatos } from '../services/api'
 import type { DatosIniciales } from '../types'
 
-// Datos del "servidor": se cargan una vez y no se modifican. Lo que el
-// estudiante cambia vive en SesionContext.
+/*
+ * ═══ PARA EXPLICAR ═══════════════════════════════════════════════════════
+ * Qué es: el contexto con los datos "remotos": estudiante, campus,
+ *   emprendimientos y grupos, más el estado de la carga.
+ *
+ * Decisión clave: estos datos NUNCA se modifican. Son la foto que entregó el
+ *   servidor. Lo que el estudiante cambia vive aparte (SesionContext), y la
+ *   pantalla mezcla ambas cosas al calcular lo que muestra.
+ *
+ * El estado de carga es una unión discriminada (cargando | error | listo):
+ *   TypeScript obliga a tratar los tres casos y evita combinaciones imposibles
+ *   como "cargando" con datos.
+ *
+ * Este es el ÚNICO useEffect de la app, y es el uso legítimo: sincronizar con
+ *   algo externo (la red). Todo lo demás se deriva en el render.
+ * ═════════════════════════════════════════════════════════════════════════
+ */
 
 type EstadoCarga =
   | { estado: 'cargando' }

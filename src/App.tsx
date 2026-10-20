@@ -13,6 +13,24 @@ import { GruposPage } from './features/grupos/GruposPage'
 import { DatosProvider, useDatos } from './state/DatosContext'
 import { SesionProvider } from './state/SesionContext'
 
+/*
+ * ═══ PARA EXPLICAR ═══════════════════════════════════════════════════════
+ * Qué es: la raíz de la app. Define las rutas y el ORDEN de los providers.
+ *
+ * El orden importa y es una decisión de arquitectura:
+ *   BrowserRouter → DatosProvider → Layout → ConDatos → SesionProvider → rutas
+ *   1. DatosProvider carga el JSON (con latencia simulada).
+ *   2. ConDatos decide qué mostrar según el estado de la carga:
+ *        cargando → skeleton   |   error → mensaje + "Reintentar"   |   listo → app
+ *   3. SesionProvider se monta SOLO con datos listos, así su estado inicial
+ *      (likes, favoritos, grupos de Camila) ya está disponible sin efectos.
+ *
+ * Rutas: /emprendimientos, /emprendimientos/:id y /grupos. Cualquier otra
+ *   muestra una página 404 (también un id que no existe).
+ *   Uso rutas (y no pestañas con useState) porque así funciona el botón
+ *   "atrás" y se pueden compartir enlaces directos.
+ * ═════════════════════════════════════════════════════════════════════════
+ */
 export function App() {
   return (
     <BrowserRouter>

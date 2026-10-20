@@ -23,9 +23,21 @@ interface Props {
   onFavorito: (id: string) => void
 }
 
-/**
- * memo + props simples + acciones estables del contexto: al dar "me gusta"
- * solo se vuelve a renderizar esta fila, no las otras 163.
+/*
+ * ═══ PARA EXPLICAR (OPTIMIZACIÓN, parte del 30 % de la rúbrica) ══════════
+ * Un "me gusta" debe re-renderizar UNA fila, no las 164. Tres piezas lo logran:
+ *   1. React.memo: la fila se salta el render si sus props no cambiaron.
+ *   2. Props simples (booleanos y números ya calculados, no objetos nuevos):
+ *      memo compara por referencia, y un objeto nuevo en cada render lo anularía.
+ *   3. onLike y onFavorito vienen del contexto dentro de un useMemo: son la
+ *      misma función en todos los renders, así que no rompen el memo.
+ *
+ * La fila NO calcula nada: recibe likes, promedio y total ya derivados. Es solo
+ * presentación (componente "tonto"); la lógica está en lib/selectores.ts.
+ *
+ * El nombre es un enlace estirado (::after) que cubre toda la fila, y los
+ * botones quedan por encima: toda la fila es clicable sin anidar enlaces.
+ * ═════════════════════════════════════════════════════════════════════════
  */
 export const EmprendimientoFila = memo(function EmprendimientoFila({
   emprendimiento,

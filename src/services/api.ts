@@ -1,7 +1,24 @@
 import type { DatosIniciales, Valoracion } from '../types'
 
-// Capa de servicios: el único lugar que sabe que los datos vienen de un archivo
-// estático. Con un backend real, solo cambia este archivo.
+/*
+ * ═══ PARA EXPLICAR ═══════════════════════════════════════════════════════
+ * Qué es: la capa de servicios. Es el único archivo que sabe que los datos
+ *   vienen de public/data/data.json. El enunciado pide consumirlo "simulando
+ *   una llamada asíncrona": aquí se hace con fetch + 700 ms de latencia.
+ *
+ * Por qué no hay backend: el enunciado dice que es opcional y da el mismo
+ *   puntaje. Esta capa permite pasar a una API real cambiando SOLO este archivo;
+ *   ningún componente conoce de dónde vienen los datos.
+ *
+ * Tres detalles para destacar:
+ *   1. La promesa se guarda en caché: StrictMode monta todo dos veces en
+ *      desarrollo y no queremos pedir el JSON dos veces.
+ *   2. Si falla, se borra la caché para que "Reintentar" realmente reintente.
+ *   3. Se valida que la respuesta sea JSON: un hosting de SPA (Vercel) responde
+ *      200 con index.html cuando falta el archivo, y `res.ok` solo no lo detecta.
+ *      Lo descubrí probando el estado de error quitando el archivo.
+ * ═════════════════════════════════════════════════════════════════════════
+ */
 
 const LATENCIA_MS = 700
 

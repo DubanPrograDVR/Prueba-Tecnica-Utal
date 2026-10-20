@@ -30,6 +30,24 @@ type Vista = 'todos' | 'mios'
 // mosaico · grupo · reunión · cupos · acciones
 const COLUMNAS = '48px minmax(0, 2.6fr) minmax(0, 1.2fr) 150px 150px'
 
+/*
+ * ═══ PARA EXPLICAR ═══════════════════════════════════════════════════════
+ * Qué resuelve (módulo B): directorio, "Mis grupos", solicitud de información
+ * e inscripción.
+ *
+ * "Mis grupos" = los del JSON (estudianteActual.gruposInscritosIds) MÁS las
+ * inscripciones de la sesión (gruposInscritosIds del contexto). El contexto ya
+ * parte con los iniciales, así que basta con leer una sola lista.
+ *
+ * Cupos y miembros se derivan con estadoGrupo(): comparan "¿ya estaba inscrita
+ * al inicio?" con "¿está inscrita ahora?". Solo una inscripción NUEVA descuenta
+ * un cupo; las iniciales ya vienen contadas en el JSON.
+ *
+ * Estado efímero de esta página (useState): qué grupo está seleccionado y si el
+ * diálogo está abierto. Hay UN diálogo por tipo para toda la lista, no 54, y
+ * `abrir` es estable (useCallback) para no romper el memo de las filas.
+ * ═════════════════════════════════════════════════════════════════════════
+ */
 export function GruposPage() {
   const {
     grupos_intermedios: grupos,

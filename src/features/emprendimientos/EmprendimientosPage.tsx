@@ -23,6 +23,23 @@ type Vista = 'todos' | 'favoritos'
 // mosaico · emprendimiento · categoría y campus · valoración · me gusta · guardar
 const COLUMNAS = '48px minmax(0, 2.4fr) minmax(0, 1.5fr) 150px 92px 44px'
 
+/*
+ * ═══ PARA EXPLICAR (ESTADO GLOBAL vs EFÍMERO, la tabla de la rúbrica) ════
+ * Esta página es el mejor lugar para mostrar la separación de estados:
+ *
+ *   GLOBAL (contexto)  → useDatosListos(): emprendimientos y campus.
+ *                        useSesion(): favoritos, likes y reseñas nuevas.
+ *   EFÍMERO (de la vista) → useFiltrosUrl(): búsqueda, categoría, campus,
+ *                        pestaña. Viven en la URL, NO en el contexto.
+ *   DERIVADO (no se guarda) → la lista filtrada, los conteos de los chips,
+ *                        los likes y el promedio de cada fila. Se calculan
+ *                        con useMemo y los selectores.
+ *
+ * Optimización: useDeferredValue sobre el texto de búsqueda mantiene el input
+ * fluido mientras se recalcula la lista; y los useMemo evitan refiltrar 164
+ * elementos en renders que no cambian nada.
+ * ═════════════════════════════════════════════════════════════════════════
+ */
 export function EmprendimientosPage() {
   const { emprendimientos, campus, estudianteActual } = useDatosListos()
   const {

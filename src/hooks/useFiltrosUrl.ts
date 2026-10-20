@@ -1,17 +1,31 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router'
 
-/**
- * Filtros de una lista guardados en la URL (estado efímero de la vista, no
- * global): sobreviven a ir al detalle y volver con "atrás".
+/*
+ * ═══ PARA EXPLICAR ═══════════════════════════════════════════════════════
+ * Qué es: un hook que guarda los filtros de una lista (búsqueda, categoría,
+ *   campus, pestaña) en la URL, por ejemplo ?q=tutorias&campus=camp_7.
  *
- * El texto de búsqueda vive además en useState: el router actualiza la URL de
- * forma asíncrona y un input leído directo de ella perdería letras al escribir.
+ * Es ESTADO EFÍMERO (el enunciado dice que no va al contexto): pertenece a la
+ *   vista, no a la sesión. Pero lo pongo en la URL en vez de un useState porque
+ *   si el estudiante entra a un emprendimiento y vuelve con "atrás", con useState
+ *   perdería sus filtros. Con la URL se conservan y además se pueden compartir.
+ *
+ * Un bug real que encontré (muy buena anécdota para la entrevista): al leer el
+ *   texto del input directamente de la URL, se perdían letras al escribir,
+ *   porque el router actualiza la URL de forma asíncrona y el input se
+ *   repintaba con el valor viejo. Solución: el texto vive en un useState local
+ *   (respuesta inmediata) y la URL guarda solo una copia.
+ *
+ * Lo usan EmprendimientosPage y GruposPage: la lógica está escrita una sola vez.
+ * ═════════════════════════════════════════════════════════════════════════
  */
 export function useFiltrosUrl() {
   const [params, setParams] = useSearchParams()
   const [texto, setTextoLocal] = useState(() => params.get('q') ?? '')
 
+  // `replace: true`: cada cambio de filtro reemplaza la entrada del historial
+  // en vez de agregar una nueva. Así "atrás" sale de la lista, no deshace filtros.
   function actualizar(clave: string, valor: string) {
     setParams(
       (previos) => {

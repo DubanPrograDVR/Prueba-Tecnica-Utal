@@ -1,7 +1,26 @@
 import type { Emprendimiento, GrupoIntermedio, Valoracion } from '../types'
 
-// Funciones puras que derivan lo que la UI muestra. Nada de esto se guarda en
-// estado: se recalcula (con useMemo) cuando cambian los datos o la sesión.
+/*
+ * ═══ PARA EXPLICAR ═══════════════════════════════════════════════════════
+ * Qué es: el "cerebro" de la app. Funciones puras que, a partir de los datos
+ *   del servidor y de la sesión, CALCULAN lo que se muestra: listas filtradas,
+ *   likes, promedio de estrellas, cupos y miembros.
+ *
+ * Es la respuesta a "¿cómo evitaste duplicar estado?": ningún resultado se
+ *   guarda. Si cambia un like, una reseña o una inscripción, estas funciones
+ *   se vuelven a ejecutar (dentro de useMemo) y todo queda consistente.
+ *
+ * Por qué son funciones puras en vez de lógica dentro de los componentes:
+ *   - Se prueban sin React (selectores.test.ts, 16 casos).
+ *   - Los componentes quedan solo con la presentación.
+ *
+ * Casos del data.json que resuelven (menciónalos, muestran que lo analizaste):
+ *   - emp_001 ya tenía "me gusta": quitarlo deja 12 → 11 (contarLikes).
+ *   - 16 emprendimientos sin reseñas: promedio null, se muestra "Sin reseñas".
+ *   - grp_09 tiene 0 cupos pero Camila ya es miembro: "Eres miembro" gana.
+ *   - campus_ids es un arreglo en emprendimientos y un valor único en grupos.
+ * ═════════════════════════════════════════════════════════════════════════
+ */
 
 /** "Música" → "musica": la búsqueda ignora mayúsculas y tildes. */
 export const normalizar = (texto: string) =>
@@ -35,6 +54,8 @@ export interface FiltrosEmprendimientos {
   soloFavoritos: boolean
 }
 
+// Todos los filtros se combinan con "Y": un emprendimiento debe cumplirlos
+// todos. Un filtro vacío ('' o false) no descarta nada.
 export function filtrarEmprendimientos(
   lista: Emprendimiento[],
   filtros: FiltrosEmprendimientos,

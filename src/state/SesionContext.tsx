@@ -7,6 +7,28 @@ import {
   type EstadoSesion,
 } from './sesionReducer'
 
+/*
+ * ═══ PARA EXPLICAR ═══════════════════════════════════════════════════════
+ * Qué es: el contexto que reparte la sesión del estudiante a toda la app.
+ *   Lo pide el enunciado: "Estado en Contexto" (favoritos, likes, valoraciones
+ *   nuevas y gruposInscritosIds).
+ *
+ * Tres decisiones:
+ *   1. El provider se monta SOLO cuando los datos ya cargaron (ver App.tsx).
+ *      Por eso el reducer nace con los IDs del estudiante (inicialización
+ *      diferida) y no hace falta un useEffect para "copiar" los datos.
+ *   2. Las acciones están en useMemo: son estables, así que las filas
+ *      memoizadas no se re-renderizan por recibirlas como props.
+ *   3. Las acciones asíncronas (publicarValoracion, inscribirse) primero
+ *      esperan al "servidor" y recién después despachan. El indicador de envío
+ *      ("Publicando…") NO vive aquí: es estado efímero de cada formulario.
+ *
+ * Por qué dos contextos (este y DatosContext) y no uno: tienen distinto ciclo
+ *   de vida. Los datos se cargan una vez y pueden fallar; la sesión cambia con
+ *   cada toque.
+ * ═════════════════════════════════════════════════════════════════════════
+ */
+
 interface AccionesSesion {
   toggleFavorito: (id: string) => void
   toggleLike: (id: string) => void
@@ -61,6 +83,8 @@ export function SesionProvider({
     [estudiante.nombre],
   )
 
+  // El valor del contexto también va memoizado: solo cambia cuando cambia el
+  // estado, no en cada render del provider.
   const valor = useMemo(() => ({ ...estado, ...acciones }), [estado, acciones])
   return <SesionContext value={valor}>{children}</SesionContext>
 }

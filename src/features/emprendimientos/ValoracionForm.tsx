@@ -10,9 +10,21 @@ import { useSesion } from '../../state/SesionContext'
 
 const MAXIMO = 280
 
-/**
- * Todo el estado del formulario es efímero (useState): valores, errores y
- * "enviando". Solo al publicar se toca el contexto, que recalcula promedio y total.
+/*
+ * ═══ PARA EXPLICAR (el ejemplo perfecto de estado efímero) ═══════════════
+ * Todo lo que ves en este formulario es estado efímero, con useState:
+ *   - estrellas y comentario  → los valores temporales antes de enviar
+ *   - errores                 → la validación básica de campos obligatorios
+ *   - enviando                → el indicador visual ("Publicando…")
+ *
+ * Solo en UN momento se toca el estado global: al publicar. Ahí se llama a
+ * publicarValoracion() del contexto, que guarda la reseña; el promedio y el
+ * total NO se tocan: se recalculan solos porque se derivan de la lista.
+ *
+ * Flujo de enviar(): validar → si hay errores, mostrarlos y enfocar el primero
+ * → si no, deshabilitar el botón (evita doble envío) → publicar → limpiar →
+ * toast de confirmación. Si falla, se conserva el texto escrito.
+ * ═════════════════════════════════════════════════════════════════════════
  */
 export function ValoracionForm({
   emprendimientoId,
