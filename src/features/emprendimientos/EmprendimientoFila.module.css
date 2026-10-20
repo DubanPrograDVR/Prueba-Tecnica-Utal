@@ -114,11 +114,7 @@
   transform: scale(0.94);
 }
 
-.accion svg {
-  width: 18px;
-  height: 18px;
-}
-
+/* Íconos, colores de estado y animaciones viven en BotonReaccion. */
 .like {
   grid-area: like;
   justify-self: end;
@@ -126,29 +122,6 @@
 
 .favorito {
   grid-area: favorito;
-}
-
-.like[aria-pressed='true'] {
-  color: var(--brand);
-}
-
-.favorito[aria-pressed='true'] {
-  color: var(--text);
-}
-
-/* "Pop" al marcar: entra desde 0.6, nunca desde 0 (Emil Kowalski) */
-.accion[aria-pressed='true'] svg {
-  transition: transform 220ms var(--ease-out);
-
-  @starting-style {
-    transform: scale(0.6);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .accion[aria-pressed='true'] svg {
-    transition: none;
-  }
 }
 
 @media (hover: hover) and (pointer: fine) {

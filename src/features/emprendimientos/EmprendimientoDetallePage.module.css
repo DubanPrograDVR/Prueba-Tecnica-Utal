@@ -73,26 +73,9 @@
   gap: 8px;
 }
 
-.toggle svg {
-  width: 16px;
-  height: 16px;
-}
-
+/* Íconos y animaciones viven en BotonReaccion; aquí solo el borde del botón. */
 .toggle[aria-pressed='true'] {
-  border-color: var(--text);
-}
-
-.toggle:first-child[aria-pressed='true'] {
-  border-color: var(--brand);
-  color: var(--brand);
-}
-
-.toggle[aria-pressed='true'] svg {
-  transition: transform 220ms var(--ease-out);
-
-  @starting-style {
-    transform: scale(0.6);
-  }
+  border-color: currentColor;
 }
 
 /* ── Cuerpo ───────────────────────────────────────────────── */
@@ -249,8 +232,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .nueva,
-  .toggle[aria-pressed='true'] svg {
+  .nueva {
     transition: none;
   }
 }

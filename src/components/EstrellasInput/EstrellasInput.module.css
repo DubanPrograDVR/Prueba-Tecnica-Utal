@@ -29,12 +29,34 @@
   border-radius: var(--radius-control);
   color: var(--control);
   cursor: pointer;
-  transition: transform var(--t-press) var(--ease-out);
+  transition:
+    transform var(--t-press) var(--ease-out),
+    color var(--t-hover) ease;
 }
 
 .estrella svg {
   width: 26px;
   height: 26px;
+  transition: transform var(--t-hover) var(--ease-out);
+}
+
+/* Solo con mouse: en pantallas táctiles el hover quedaría pegado tras el toque. */
+@media (hover: hover) and (pointer: fine) {
+  .estrella:hover svg {
+    transform: scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .estrella,
+  .estrella svg {
+    transition-property: color;
+  }
+
+  .estrella:hover svg,
+  .estrella:active {
+    transform: none;
+  }
 }
 
 .estrella[data-llena='true'] {

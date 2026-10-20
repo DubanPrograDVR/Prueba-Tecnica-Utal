@@ -1,0 +1,4 @@
+/* transform no se aplica a elementos en línea */
+.contador {
+  display: inline-block;
+}

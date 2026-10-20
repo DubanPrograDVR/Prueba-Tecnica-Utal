@@ -12,7 +12,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMemo, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router'
+import { BotonReaccion } from '../../components/BotonReaccion/BotonReaccion'
 import { Estrellas } from '../../components/Calificacion/Calificacion'
+import { Contador } from '../../components/Contador/Contador'
 import { NoEncontrado } from '../../components/Estados/Estados'
 import { Avatar, Mosaico } from '../../components/Mosaico/Mosaico'
 import { canalesDeContacto, type TipoCanal } from '../../lib/contacto'
@@ -100,31 +102,27 @@ export function EmprendimientoDetallePage() {
           <p className={s.descripcion}>{descripcion}</p>
         </div>
         <div className={s.acciones}>
-          <button
-            type="button"
+          <BotonReaccion
+            tipo="like"
+            activo={liked}
+            onAlternar={() => toggleLike(emprendimiento.id)}
+            iconoVacio={faHeartVacio}
+            iconoLleno={faHeart}
+            cuenta={likes}
             className={`btn ${s.toggle}`}
-            aria-pressed={liked}
-            onClick={() => toggleLike(emprendimiento.id)}
           >
-            <FontAwesomeIcon
-              key={String(liked)}
-              icon={liked ? faHeart : faHeartVacio}
-            />
-            <span className="num">{likes}</span>
             <span className="sr-only"> me gusta</span>
-          </button>
-          <button
-            type="button"
+          </BotonReaccion>
+          <BotonReaccion
+            tipo="guardar"
+            activo={favorito}
+            onAlternar={() => toggleFavorito(emprendimiento.id)}
+            iconoVacio={faBookmarkVacio}
+            iconoLleno={faBookmark}
             className={`btn ${s.toggle}`}
-            aria-pressed={favorito}
-            onClick={() => toggleFavorito(emprendimiento.id)}
           >
-            <FontAwesomeIcon
-              key={String(favorito)}
-              icon={favorito ? faBookmark : faBookmarkVacio}
-            />
             {favorito ? 'Guardado' : 'Guardar'}
-          </button>
+          </BotonReaccion>
         </div>
       </header>
 
@@ -180,12 +178,16 @@ export function EmprendimientoDetallePage() {
               </p>
             ) : (
               <p className={s.promedio}>
-                <span className={`${s.cifra} num`}>
-                  {formatoPromedio(promedio)}
+                <span className={s.cifra}>
+                  <Contador valor={promedio}>
+                    {formatoPromedio(promedio)}
+                  </Contador>
                 </span>
                 <Estrellas valor={promedio} grande />
-                <span className={`${s.total} num`}>
-                  {plural(total, 'reseña', 'reseñas')}
+                <span className={s.total}>
+                  <Contador valor={total}>
+                    {plural(total, 'reseña', 'reseñas')}
+                  </Contador>
                 </span>
               </p>
             )}

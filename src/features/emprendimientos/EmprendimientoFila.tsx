@@ -3,9 +3,9 @@ import {
   faHeart as faHeartVacio,
 } from '@fortawesome/free-regular-svg-icons'
 import { faBookmark, faHeart } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { memo } from 'react'
 import { Link } from 'react-router'
+import { BotonReaccion } from '../../components/BotonReaccion/BotonReaccion'
 import { Calificacion } from '../../components/Calificacion/Calificacion'
 import { Mosaico } from '../../components/Mosaico/Mosaico'
 import type { Emprendimiento } from '../../types'
@@ -61,33 +61,28 @@ export const EmprendimientoFila = memo(function EmprendimientoFila({
         <Calificacion promedio={promedio} total={totalResenas} />
       </div>
 
-      <button
-        type="button"
+      <BotonReaccion
+        tipo="like"
+        activo={liked}
+        onAlternar={() => onLike(id)}
+        iconoVacio={faHeartVacio}
+        iconoLleno={faHeart}
+        cuenta={likes}
         className={`${s.accion} ${s.like}`}
-        aria-pressed={liked}
-        onClick={() => onLike(id)}
       >
-        {/* key: el ícono nuevo se monta y @starting-style le da el "pop" */}
-        <FontAwesomeIcon
-          key={String(liked)}
-          icon={liked ? faHeart : faHeartVacio}
-        />
-        <span className="num">{likes}</span>
         <span className="sr-only"> me gusta</span>
-      </button>
+      </BotonReaccion>
 
-      <button
-        type="button"
+      <BotonReaccion
+        tipo="guardar"
+        activo={favorito}
+        onAlternar={() => onFavorito(id)}
+        iconoVacio={faBookmarkVacio}
+        iconoLleno={faBookmark}
         className={`${s.accion} ${s.favorito}`}
-        aria-pressed={favorito}
-        onClick={() => onFavorito(id)}
       >
-        <FontAwesomeIcon
-          key={String(favorito)}
-          icon={favorito ? faBookmark : faBookmarkVacio}
-        />
         <span className="sr-only">Guardar en favoritos</span>
-      </button>
+      </BotonReaccion>
     </li>
   )
 })
