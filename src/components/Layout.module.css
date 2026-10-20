@@ -1,0 +1,232 @@
+/* Teléfono primero: barra superior + navegación inferior.
+   Desde 1024px: barra lateral de 240px sobre el mismo fondo ("open plane"). */
+
+.app {
+  min-height: 100dvh;
+}
+
+.saltar {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 20;
+  padding: 8px 12px;
+  border-radius: var(--radius-control);
+  background: var(--text);
+  color: #fff;
+  transform: translateY(-200%);
+}
+
+.saltar:focus-visible {
+  transform: none;
+}
+
+/* Barra superior en el teléfono */
+.lateral {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 56px;
+  padding: env(safe-area-inset-top, 0px) 16px 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.marca strong {
+  display: block;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.marca small {
+  display: none;
+  color: var(--muted);
+  font-size: var(--fs-meta);
+}
+
+.sello {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+/* Navegación inferior en el teléfono */
+.nav {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 6px 12px env(safe-area-inset-bottom, 0px);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+.enlace {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-height: 52px;
+  padding-top: 4px;
+  color: var(--muted);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+}
+
+.icono {
+  width: 20px;
+  height: 20px;
+  padding: 4px 18px;
+  border-radius: var(--radius-chip);
+  transition: background-color var(--t-hover) ease;
+}
+
+.enlace[aria-current='page'] {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.enlace[aria-current='page'] .icono {
+  background: var(--active);
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+}
+
+.datosUsuario {
+  display: none;
+}
+
+.contenido {
+  min-width: 0;
+  padding: var(--pad) var(--pad)
+    calc(var(--bottom-nav) + env(safe-area-inset-bottom, 0px) + var(--pad));
+}
+
+/* ── Escritorio ─────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  .app {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  }
+
+  .lateral {
+    top: 0;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 24px;
+    height: 100dvh;
+    padding: 28px 16px 20px;
+    background: var(--ground);
+    border-bottom: 0;
+  }
+
+  .marca {
+    padding: 0 8px;
+  }
+
+  .marca small {
+    display: block;
+  }
+
+  .nav {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0;
+    background: none;
+    border-top: 0;
+  }
+
+  .enlace {
+    flex-direction: row;
+    gap: 12px;
+    min-height: 40px;
+    padding: 0 12px;
+    border-radius: var(--radius-control);
+    font-size: var(--fs-small);
+  }
+
+  .icono {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+  }
+
+  .enlace[aria-current='page'] {
+    background: var(--active);
+  }
+
+  .enlace[aria-current='page'] .icono {
+    background: none;
+  }
+
+  .usuario {
+    margin-top: auto;
+    padding: 12px 8px 0;
+  }
+
+  .datosUsuario {
+    display: grid;
+    min-width: 0;
+    line-height: 1.3;
+  }
+
+  .datosUsuario strong {
+    font-size: var(--fs-small);
+    font-weight: 500;
+  }
+
+  .datosUsuario small {
+    color: var(--muted);
+    font-size: var(--fs-meta);
+  }
+
+  .contenido {
+    padding: 36px var(--pad) 48px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .enlace:hover {
+    color: var(--text);
+  }
+}

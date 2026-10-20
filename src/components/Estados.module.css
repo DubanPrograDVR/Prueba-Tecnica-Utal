@@ -1,0 +1,111 @@
+/* ── Carga ───────────────────────────────────────────────── */
+.skeleton {
+  display: grid;
+  gap: 12px;
+}
+
+.skeleton span:not(.lineas) {
+  display: block;
+  border-radius: 6px;
+  background: var(--active);
+}
+
+.barraTitulo {
+  width: 220px;
+  height: 28px;
+}
+
+.barraSub {
+  width: min(360px, 80%);
+  height: 16px;
+  margin-bottom: 20px;
+}
+
+.barraFiltros {
+  height: 40px;
+  margin-bottom: 8px;
+}
+
+.panel {
+  padding: 8px 20px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.fila {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 88px;
+}
+
+.fila + .fila {
+  border-top: 1px solid var(--rule);
+}
+
+.cuadro {
+  flex: none;
+  width: 48px;
+  height: 48px;
+}
+
+.lineas {
+  display: grid;
+  flex: 1;
+  gap: 8px;
+}
+
+.lineas span {
+  height: 14px;
+  border-radius: 6px;
+  background: var(--active);
+}
+
+.lineas span:first-child {
+  width: 40%;
+  height: 16px;
+}
+
+/* ── Error ───────────────────────────────────────────────── */
+.error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.iconoError {
+  width: 20px;
+  height: 20px;
+  color: var(--negative);
+}
+
+.error > div {
+  flex: 1;
+  min-width: 200px;
+}
+
+.tituloError {
+  font-weight: 600;
+}
+
+.detalle {
+  color: var(--muted);
+  font-size: var(--fs-small);
+}
+
+/* ── Vacío ───────────────────────────────────────────────── */
+.vacio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px;
+  border: 1px dashed var(--control);
+  border-radius: 10px;
+  color: var(--muted);
+}

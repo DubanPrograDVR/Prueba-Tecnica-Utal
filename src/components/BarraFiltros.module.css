@@ -1,0 +1,73 @@
+/* Teléfono: búsqueda a todo el ancho; los dos selects comparten una fila. */
+.barra {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.busqueda {
+  position: relative;
+  grid-column: 1 / -1;
+}
+
+.busqueda input {
+  padding-left: 40px;
+}
+
+.lupa {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  width: 14px;
+  height: 14px;
+  color: var(--muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.filtro select {
+  appearance: none;
+  padding-right: 36px;
+  background: var(--surface)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235c6064' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat right 14px center / 11px;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.filtro select[data-activo='true'] {
+  border-color: var(--text);
+  font-weight: 500;
+}
+
+.resultados {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: var(--fs-small);
+  white-space: nowrap;
+}
+
+/* Tablet: búsqueda y selects en una fila; el conteo en la suya. */
+@media (min-width: 768px) {
+  .barra {
+    grid-template-columns: minmax(0, 1fr) repeat(2, minmax(0, 220px));
+    gap: 12px;
+  }
+
+  .busqueda {
+    grid-column: auto;
+  }
+}
+
+/* Escritorio: el conteo vuelve a la derecha de la misma fila. */
+@media (min-width: 1024px) {
+  .barra {
+    grid-template-columns: minmax(0, 320px) repeat(2, minmax(0, 220px)) 1fr;
+  }
+
+  .resultados {
+    grid-column: auto;
+    text-align: right;
+  }
+}

@@ -1,0 +1,70 @@
+/*
+  Tokens de diseño. Estilo "pastel-consumer" (Taste-skill, seed 726732079) con la
+  marca de la Universidad de Talca: rojo #c00418 e Inter, tomados de utalca.cl.
+  Todo el CSS de la app usa estos nombres; ningún componente define colores sueltos.
+*/
+:root {
+  /* Superficies */
+  --ground: #f3f5f7; /* fondo de la app */
+  --surface: #ffffff; /* paneles y listas */
+  --raised: #f7f8fa; /* hover de filas, pozos */
+  --active: #e9ebee; /* ítem activo de la navegación */
+  --border: #e6e6e6;
+  --rule: #f0f1f3;
+  --control: #8b9096; /* borde de inputs: 3:1 sobre blanco */
+
+  /* Texto: todos los tonos superan 4,5:1 sobre --ground y --surface */
+  --text: #1d1d1d;
+  --muted: #5c6064;
+
+  /* Marca: el rojo va en la acción principal, el foco y el "me gusta" */
+  --brand: #c00418;
+  --brand-hover: #9e0314;
+  --brand-soft: #fde7e9;
+  --brand-ink: #8f0313;
+  --star: #b45309; /* valoraciones */
+
+  /* Estados (pares pálido/tinta) */
+  --positive: #2f7a45;
+  --negative: #b5272d;
+  --pill-positive-bg: #dcfae5;
+  --pill-positive-ink: #04250e;
+  --pill-neutral-bg: #eef1f4;
+  --pill-neutral-ink: #3a3d40;
+  --pill-warning-bg: #fffbeb;
+  --pill-warning-ink: #92400e;
+
+  /* Tipografía */
+  --font:
+    'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fs-title: 28px;
+  --fs-section: 20px;
+  --fs-body: 16px;
+  --fs-small: 14px;
+  --fs-meta: 13px;
+
+  /* Forma y espacio */
+  --radius-card: 20px;
+  --radius-control: 10px;
+  --radius-chip: 999px;
+  --control-height: 40px;
+  --gap: 24px;
+  --pad: 32px;
+  --sidebar-width: 240px;
+  --bottom-nav: 64px;
+
+  /* Movimiento (Emil Kowalski): curvas fuertes, siempre bajo 300 ms */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --t-press: 160ms;
+  --t-hover: 150ms;
+  --t-ui: 200ms;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --fs-title: 24px;
+    --gap: 16px;
+    --pad: 16px;
+  }
+}

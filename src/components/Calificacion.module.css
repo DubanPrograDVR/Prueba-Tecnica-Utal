@@ -1,0 +1,23 @@
+.calificacion {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.estrella {
+  width: 14px;
+  height: 14px;
+  align-self: center;
+  color: var(--star);
+}
+
+.promedio {
+  font-weight: 600;
+}
+
+.total,
+.vacia {
+  color: var(--muted);
+  font-size: var(--fs-meta);
+}

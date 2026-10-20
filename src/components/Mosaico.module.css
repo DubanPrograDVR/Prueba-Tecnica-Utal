@@ -1,0 +1,13 @@
+.mosaico {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px; /* 20 de la tarjeta → 10 dentro */
+  background: var(--fondo);
+  color: var(--tinta);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
