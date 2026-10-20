@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { memo, type CSSProperties } from 'react'
 import { Mosaico } from '../../components/Mosaico/Mosaico'
 import { nombreGrupo, plural } from '../../lib/formato'
+import { tonoDe } from '../../lib/tonos'
 import type { GrupoIntermedio } from '../../types'
 import s from './GrupoFila.module.css'
 
@@ -73,7 +74,12 @@ export const GrupoFila = memo(function GrupoFila({
         </p>
         <span
           className={s.barra}
-          style={{ '--ocupacion': ocupacion } as CSSProperties}
+          style={
+            {
+              '--ocupacion': ocupacion,
+              '--tinta': tonoDe(grupo.tematica).tinta,
+            } as CSSProperties
+          }
           aria-hidden="true"
         />
         <p className={`${s.miembros} num`}>

@@ -1,8 +1,8 @@
-/* Teléfono: búsqueda a todo el ancho; los dos selects comparten una fila. */
+/* Teléfono: búsqueda a todo el ancho; el select y el conteo comparten la fila siguiente. */
 .barra {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 12px;
   align-items: center;
 }
 
@@ -42,32 +42,20 @@
 }
 
 .resultados {
-  grid-column: 1 / -1;
   color: var(--muted);
   font-size: var(--fs-small);
+  text-align: right;
   white-space: nowrap;
 }
 
-/* Tablet: búsqueda y selects en una fila; el conteo en la suya. */
+/* Desde tablet: búsqueda, select y conteo en una sola fila. */
 @media (min-width: 768px) {
   .barra {
-    grid-template-columns: minmax(0, 1fr) repeat(2, minmax(0, 220px));
+    grid-template-columns: minmax(0, 360px) minmax(0, 280px) 1fr;
     gap: 12px;
   }
 
   .busqueda {
     grid-column: auto;
-  }
-}
-
-/* Escritorio: el conteo vuelve a la derecha de la misma fila. */
-@media (min-width: 1024px) {
-  .barra {
-    grid-template-columns: minmax(0, 320px) repeat(2, minmax(0, 220px)) 1fr;
-  }
-
-  .resultados {
-    grid-column: auto;
-    text-align: right;
   }
 }

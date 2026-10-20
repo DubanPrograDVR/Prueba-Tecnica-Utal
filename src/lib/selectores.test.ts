@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { Emprendimiento, GrupoIntermedio, Valoracion } from '../types'
 import {
   contarLikes,
+  contarPor,
   estadoGrupo,
   filtrarEmprendimientos,
   filtrarGrupos,
@@ -58,6 +59,13 @@ const grupo = (parcial: Partial<GrupoIntermedio>): GrupoIntermedio => ({
 describe('normalizar y valoresUnicos', () => {
   it('ignora mayúsculas y tildes', () => {
     expect(normalizar('Música y Tecnología')).toBe('musica y tecnologia')
+  })
+
+  it('cuenta cuántas veces aparece cada valor', () => {
+    const conteo = contarPor(['Tejidos', 'Alimentación', 'Tejidos'])
+    expect(conteo.get('Tejidos')).toBe(2)
+    expect(conteo.get('Alimentación')).toBe(1)
+    expect(conteo.get('Otra')).toBeUndefined()
   })
 
   it('entrega opciones únicas y ordenadas', () => {

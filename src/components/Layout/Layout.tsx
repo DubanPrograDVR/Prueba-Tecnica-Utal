@@ -26,9 +26,18 @@ export function Layout({ children }: { children: ReactNode }) {
 
       <aside className={s.lateral}>
         <Link to="/emprendimientos" className={s.marca}>
-          <span className={s.sello} aria-hidden="true">
-            U
-          </span>
+          {/* Sello propio: una persona dentro de la "U" (la comunidad del campus). */}
+          <svg className={s.sello} viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="currentColor" />
+            <path
+              d="M9.5 9v7.5a6.5 6.5 0 0 0 13 0V9"
+              fill="none"
+              stroke="#fff"
+              strokeWidth="3"
+              strokeLinecap="round"
+            />
+            <circle cx="16" cy="11.5" r="2.6" fill="#fff" />
+          </svg>
           <span>
             <strong>Comunidad UTalca</strong>
             <small>Universidad de Talca</small>

@@ -1,5 +1,6 @@
 import { useDeferredValue, useMemo, type CSSProperties } from 'react'
 import { BarraFiltros } from '../../components/BarraFiltros/BarraFiltros'
+import { Chips } from '../../components/Chips/Chips'
 import { EstadoVacio } from '../../components/Estados/Estados'
 import lista from '../../components/PaginaLista/PaginaLista.module.css'
 import { Tabs } from '../../components/Tabs/Tabs'
@@ -7,6 +8,7 @@ import { useFiltrosUrl } from '../../hooks/useFiltrosUrl'
 import { plural } from '../../lib/formato'
 import {
   contarLikes,
+  contarPor,
   filtrarEmprendimientos,
   resumenValoraciones,
   valoracionesDe,
@@ -39,27 +41,33 @@ export function EmprendimientosPage() {
     filtros.valor('vista') === 'favoritos' ? 'favoritos' : 'todos'
 
   // La lista se recalcula con el texto "diferido": el input nunca se traba al escribir.
+  // Primero todos los filtros menos la categoría: de ahí salen los conteos de
+  // los chips (siguen a la vista) y luego se aplica la categoría elegida.
   const textoDiferido = useDeferredValue(filtros.texto)
-  const resultado = useMemo(
+  const sinCategoria = useMemo(
     () =>
       filtrarEmprendimientos(
         emprendimientos,
         {
           texto: textoDiferido,
-          clasificacion,
+          clasificacion: '',
           campus: campusId,
           soloFavoritos: vista === 'favoritos',
         },
         favoritosIds,
       ),
-    [
-      emprendimientos,
-      textoDiferido,
-      clasificacion,
-      campusId,
-      vista,
-      favoritosIds,
-    ],
+    [emprendimientos, textoDiferido, campusId, vista, favoritosIds],
+  )
+  const resultado = useMemo(
+    () =>
+      clasificacion
+        ? sinCategoria.filter((e) => e.clasificacion === clasificacion)
+        : sinCategoria,
+    [sinCategoria, clasificacion],
+  )
+  const conteoCategorias = useMemo(
+    () => contarPor(sinCategoria.map((e) => e.clasificacion)),
+    [sinCategoria],
   )
 
   const categorias = useMemo(
@@ -122,22 +130,32 @@ export function EmprendimientosPage() {
         resultados={plural(resultado.length, 'resultado', 'resultados')}
         filtros={[
           {
-            id: 'categoria',
-            etiqueta: 'Categoría',
-            todas: 'Categorías',
-            valor: clasificacion,
-            opciones: categorias.map((c) => ({ valor: c, etiqueta: c })),
-            onCambio: (v) => filtros.actualizar('categoria', v),
-          },
-          {
             id: 'campus',
             etiqueta: 'Campus',
-            todas: 'Campus',
+            todas: 'Todos los campus',
             valor: campusId,
-            opciones: campus.map((c) => ({ valor: c.id, etiqueta: c.nombre })),
+            opciones: campus.map((c) => ({
+              valor: c.id,
+              etiqueta:
+                c.id === estudianteActual.campus_id
+                  ? `${c.nombre} · tu campus`
+                  : c.nombre,
+            })),
             onCambio: (v) => filtros.actualizar('campus', v),
           },
         ]}
+      />
+
+      <Chips
+        etiqueta="Categoría"
+        todas="Todas"
+        total={sinCategoria.length}
+        valor={clasificacion}
+        onCambio={(v) => filtros.actualizar('categoria', v)}
+        opciones={categorias.map((c) => ({
+          valor: c,
+          cuenta: conteoCategorias.get(c) ?? 0,
+        }))}
       />
 
       <section

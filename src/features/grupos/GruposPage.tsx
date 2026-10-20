@@ -6,12 +6,18 @@ import {
   type CSSProperties,
 } from 'react'
 import { BarraFiltros } from '../../components/BarraFiltros/BarraFiltros'
+import { Chips } from '../../components/Chips/Chips'
 import { EstadoVacio } from '../../components/Estados/Estados'
 import lista from '../../components/PaginaLista/PaginaLista.module.css'
 import { Tabs } from '../../components/Tabs/Tabs'
 import { useFiltrosUrl } from '../../hooks/useFiltrosUrl'
 import { plural } from '../../lib/formato'
-import { estadoGrupo, filtrarGrupos, valoresUnicos } from '../../lib/selectores'
+import {
+  contarPor,
+  estadoGrupo,
+  filtrarGrupos,
+  valoresUnicos,
+} from '../../lib/selectores'
 import { useDatosListos } from '../../state/DatosContext'
 import { useSesion } from '../../state/SesionContext'
 import type { GrupoIntermedio } from '../../types'
@@ -37,20 +43,32 @@ export function GruposPage() {
   const campusId = filtros.valor('campus')
   const vista: Vista = filtros.valor('vista') === 'mios' ? 'mios' : 'todos'
 
+  // Todos los filtros menos la temática: de ahí salen los conteos de los chips.
   const textoDiferido = useDeferredValue(filtros.texto)
-  const resultado = useMemo(
+  const sinTematica = useMemo(
     () =>
       filtrarGrupos(
         grupos,
         {
           texto: textoDiferido,
-          tematica,
+          tematica: '',
           campus: campusId,
           soloMios: vista === 'mios',
         },
         gruposInscritosIds,
       ),
-    [grupos, textoDiferido, tematica, campusId, vista, gruposInscritosIds],
+    [grupos, textoDiferido, campusId, vista, gruposInscritosIds],
+  )
+  const resultado = useMemo(
+    () =>
+      tematica
+        ? sinTematica.filter((g) => g.tematica === tematica)
+        : sinTematica,
+    [sinTematica, tematica],
+  )
+  const conteoTematicas = useMemo(
+    () => contarPor(sinTematica.map((g) => g.tematica)),
+    [sinTematica],
   )
 
   const tematicas = useMemo(
@@ -120,22 +138,32 @@ export function GruposPage() {
         resultados={plural(resultado.length, 'resultado', 'resultados')}
         filtros={[
           {
-            id: 'tematica',
-            etiqueta: 'Área temática',
-            todas: 'Temáticas',
-            valor: tematica,
-            opciones: tematicas.map((t) => ({ valor: t, etiqueta: t })),
-            onCambio: (v) => filtros.actualizar('tematica', v),
-          },
-          {
             id: 'campus',
             etiqueta: 'Campus',
-            todas: 'Campus',
+            todas: 'Todos los campus',
             valor: campusId,
-            opciones: campus.map((c) => ({ valor: c.id, etiqueta: c.nombre })),
+            opciones: campus.map((c) => ({
+              valor: c.id,
+              etiqueta:
+                c.id === estudianteActual.campus_id
+                  ? `${c.nombre} · tu campus`
+                  : c.nombre,
+            })),
             onCambio: (v) => filtros.actualizar('campus', v),
           },
         ]}
+      />
+
+      <Chips
+        etiqueta="Área temática"
+        todas="Todas"
+        total={sinTematica.length}
+        valor={tematica}
+        onCambio={(v) => filtros.actualizar('tematica', v)}
+        opciones={tematicas.map((t) => ({
+          valor: t,
+          cuenta: conteoTematicas.get(t) ?? 0,
+        }))}
       />
 
       <section

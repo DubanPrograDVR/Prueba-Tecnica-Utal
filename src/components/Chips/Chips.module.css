@@ -1,0 +1,85 @@
+/*
+  Teléfono: una fila que se desliza de lado, sangrada hasta los bordes de la
+  pantalla (sin mover la página). Desde 1024px: los chips se acomodan en líneas.
+*/
+.chips {
+  display: flex;
+  gap: 8px;
+  margin: 0 calc(var(--pad) * -1);
+  padding: 2px var(--pad);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  /* el imán respeta el margen de la página */
+  scroll-padding-inline: var(--pad);
+  scrollbar-width: none;
+}
+
+.chips::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-chip);
+  background: var(--fondo, var(--surface));
+  color: var(--tinta, var(--text));
+  font-size: var(--fs-small);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition:
+    transform var(--t-press) var(--ease-out),
+    background-color var(--t-hover) ease,
+    color var(--t-hover) ease;
+}
+
+/* "Todas" no tiene tinte: blanco con borde. */
+.chip:first-child {
+  border-color: var(--border);
+}
+
+.chip:active {
+  transform: scale(0.97);
+}
+
+/* Seleccionado: el chip se llena con la tinta de su propio tono. */
+.chip[aria-pressed='true'] {
+  border-color: transparent;
+  background: var(--tinta, var(--text));
+  color: #fff;
+}
+
+/* Sin opacidad: el conteo mantiene el contraste de 4,5:1 sobre el tinte. */
+.cuenta {
+  font-size: var(--fs-meta);
+  font-weight: 400;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chip:not([aria-pressed='true']):hover {
+    border-color: var(--tinta, var(--control));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip {
+    transition-property: background-color, color;
+  }
+}
+
+@media (min-width: 1024px) {
+  .chips {
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+}

@@ -131,7 +131,8 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: var(--text);
+  /* el tono de la temática del grupo: el color va en el dato */
+  background: var(--tinta, var(--text));
   transform: scaleX(var(--ocupacion));
   transform-origin: left;
   transition: transform 300ms var(--ease-out);

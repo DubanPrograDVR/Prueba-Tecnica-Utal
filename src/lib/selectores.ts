@@ -19,6 +19,13 @@ const coincideTexto = (campos: string, busqueda: string) => {
 export const valoresUnicos = (valores: string[]) =>
   [...new Set(valores)].sort((a, b) => a.localeCompare(b, 'es'))
 
+/** Cuántas veces aparece cada valor: los conteos de los chips de categoría. */
+export function contarPor(valores: string[]) {
+  const conteo = new Map<string, number>()
+  for (const v of valores) conteo.set(v, (conteo.get(v) ?? 0) + 1)
+  return conteo
+}
+
 // ── Emprendimientos ─────────────────────────────────────────────
 
 export interface FiltrosEmprendimientos {
