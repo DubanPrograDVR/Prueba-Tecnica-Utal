@@ -1,8 +1,9 @@
-import { useDeferredValue, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router'
+import { useDeferredValue, useMemo, type CSSProperties } from 'react'
 import { BarraFiltros } from '../../components/BarraFiltros'
 import { EstadoVacio } from '../../components/Estados'
+import lista from '../../components/PaginaLista.module.css'
 import { Tabs } from '../../components/Tabs'
+import { useFiltrosUrl } from '../../hooks/useFiltrosUrl'
 import { plural } from '../../lib/formato'
 import {
   contarLikes,
@@ -14,9 +15,11 @@ import {
 import { useDatosListos } from '../../state/DatosContext'
 import { useSesion } from '../../state/SesionContext'
 import { EmprendimientoFila } from './EmprendimientoFila'
-import s from './EmprendimientosPage.module.css'
 
 type Vista = 'todos' | 'favoritos'
+
+// mosaico · emprendimiento · categoría y campus · valoración · me gusta · guardar
+const COLUMNAS = '48px minmax(0, 2.4fr) minmax(0, 1.5fr) 150px 92px 44px'
 
 export function EmprendimientosPage() {
   const { emprendimientos, campus, estudianteActual } = useDatosListos()
@@ -28,31 +31,15 @@ export function EmprendimientosPage() {
     toggleFavorito,
   } = useSesion()
 
-  // Estado efímero de la vista, guardado en la URL: sobrevive a ir al detalle y volver.
-  const [params, setParams] = useSearchParams()
-  // El texto vive en useState porque el router actualiza la URL de forma
-  // asíncrona: un input leído directo de la URL perdería letras al escribir.
-  // La URL guarda una copia para restaurarlo al volver.
-  const [texto, setTexto] = useState(() => params.get('q') ?? '')
-  const clasificacion = params.get('categoria') ?? ''
-  const campusId = params.get('campus') ?? ''
+  // Estado efímero de la vista (en la URL, no en el contexto).
+  const filtros = useFiltrosUrl()
+  const clasificacion = filtros.valor('categoria')
+  const campusId = filtros.valor('campus')
   const vista: Vista =
-    params.get('vista') === 'favoritos' ? 'favoritos' : 'todos'
-
-  function actualizar(clave: string, valor: string) {
-    setParams(
-      (previos) => {
-        const siguientes = new URLSearchParams(previos)
-        if (valor) siguientes.set(clave, valor)
-        else siguientes.delete(clave)
-        return siguientes
-      },
-      { replace: true },
-    )
-  }
+    filtros.valor('vista') === 'favoritos' ? 'favoritos' : 'todos'
 
   // La lista se recalcula con el texto "diferido": el input nunca se traba al escribir.
-  const textoDiferido = useDeferredValue(texto)
+  const textoDiferido = useDeferredValue(filtros.texto)
   const resultado = useMemo(
     () =>
       filtrarEmprendimientos(
@@ -92,11 +79,14 @@ export function EmprendimientosPage() {
     [emprendimientos, estudianteActual.campus_id],
   )
 
-  const hayFiltros = Boolean(texto || clasificacion || campusId)
+  const hayFiltros = Boolean(filtros.texto || clasificacion || campusId)
 
   return (
-    <div className={s.pagina}>
-      <header className={s.titulo}>
+    <div
+      className={lista.pagina}
+      style={{ '--columnas': COLUMNAS } as CSSProperties}
+    >
+      <header className={lista.titulo}>
         <h1>Emprendimientos</h1>
         <p>
           {plural(
@@ -112,7 +102,9 @@ export function EmprendimientosPage() {
         etiqueta="Vista del catálogo"
         controla="lista-emprendimientos"
         valor={vista}
-        onCambio={(v) => actualizar('vista', v === 'favoritos' ? v : '')}
+        onCambio={(v) =>
+          filtros.actualizar('vista', v === 'favoritos' ? v : '')
+        }
         opciones={[
           { valor: 'todos', etiqueta: 'Todos', cuenta: emprendimientos.length },
           {
@@ -124,11 +116,8 @@ export function EmprendimientosPage() {
       />
 
       <BarraFiltros
-        texto={texto}
-        onTexto={(v) => {
-          setTexto(v)
-          actualizar('q', v)
-        }}
+        texto={filtros.texto}
+        onTexto={filtros.buscar}
         ayudaBusqueda="Buscar emprendimientos"
         resultados={plural(resultado.length, 'resultado', 'resultados')}
         filtros={[
@@ -138,7 +127,7 @@ export function EmprendimientosPage() {
             todas: 'Categorías',
             valor: clasificacion,
             opciones: categorias.map((c) => ({ valor: c, etiqueta: c })),
-            onCambio: (v) => actualizar('categoria', v),
+            onCambio: (v) => filtros.actualizar('categoria', v),
           },
           {
             id: 'campus',
@@ -146,7 +135,7 @@ export function EmprendimientosPage() {
             todas: 'Campus',
             valor: campusId,
             opciones: campus.map((c) => ({ valor: c.id, etiqueta: c.nombre })),
-            onCambio: (v) => actualizar('campus', v),
+            onCambio: (v) => filtros.actualizar('campus', v),
           },
         ]}
       />
@@ -155,11 +144,11 @@ export function EmprendimientosPage() {
         id="lista-emprendimientos"
         role="tabpanel"
         aria-label="Emprendimientos"
-        className={s.panel}
+        className={lista.panel}
       >
         {resultado.length > 0 ? (
           <>
-            <div className={s.cabecera} aria-hidden="true">
+            <div className={lista.cabecera} aria-hidden="true">
               <span />
               <span>Emprendimiento</span>
               <span>Categoría y campus</span>
@@ -195,7 +184,7 @@ export function EmprendimientosPage() {
             </ul>
           </>
         ) : (
-          <div className={s.vacio}>
+          <div className={lista.vacio}>
             {vista === 'favoritos' && !hayFiltros ? (
               <EstadoVacio>
                 Aún no guardas emprendimientos. Toca el marcador de cualquier
@@ -207,12 +196,7 @@ export function EmprendimientosPage() {
                   <button
                     type="button"
                     className="btn"
-                    onClick={() => {
-                      setTexto('')
-                      setParams(vista === 'favoritos' ? { vista } : {}, {
-                        replace: true,
-                      })
-                    }}
+                    onClick={() => filtros.limpiar(['vista'])}
                   >
                     Limpiar filtros
                   </button>
