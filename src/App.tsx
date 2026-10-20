@@ -1,7 +1,11 @@
 import type { ReactNode } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { Toaster } from 'sonner'
-import { EstadoError, NoEncontrado, SkeletonLista } from './components/Estados/Estados'
+import {
+  EstadoError,
+  NoEncontrado,
+  SkeletonLista,
+} from './components/Estados/Estados'
 import { Layout } from './components/Layout/Layout'
 import { EmprendimientoDetallePage } from './features/emprendimientos/EmprendimientoDetallePage'
 import { EmprendimientosPage } from './features/emprendimientos/EmprendimientosPage'
