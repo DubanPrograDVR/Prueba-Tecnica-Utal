@@ -116,19 +116,6 @@
   gap: 10px;
 }
 
-.avatar {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--fondo);
-  color: var(--tinta);
-  font-size: var(--fs-meta);
-  font-weight: 600;
-}
-
 .datosUsuario {
   display: none;
 }

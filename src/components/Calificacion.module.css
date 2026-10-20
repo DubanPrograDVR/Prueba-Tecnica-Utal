@@ -21,3 +21,19 @@
   color: var(--muted);
   font-size: var(--fs-meta);
 }
+
+.estrellas {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--star);
+}
+
+.estrellas svg {
+  width: 13px;
+  height: 13px;
+}
+
+.grandes svg {
+  width: 18px;
+  height: 18px;
+}

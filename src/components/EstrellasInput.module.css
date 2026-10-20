@@ -1,0 +1,61 @@
+.estrellas {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.leyenda {
+  margin-bottom: 8px;
+  padding: 0;
+  font-size: var(--fs-small);
+  font-weight: 500;
+}
+
+.fila {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.opciones {
+  display: flex;
+}
+
+.estrella {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-control);
+  color: var(--control);
+  cursor: pointer;
+  transition: transform var(--t-press) var(--ease-out);
+}
+
+.estrella svg {
+  width: 26px;
+  height: 26px;
+}
+
+.estrella[data-llena='true'] {
+  color: var(--star);
+}
+
+.estrella:active {
+  transform: scale(0.9);
+}
+
+/* El radio está oculto: el foco se dibuja en su etiqueta. */
+.estrella:has(input:focus-visible) {
+  outline: 2px solid var(--brand);
+  outline-offset: -2px;
+}
+
+.etiqueta {
+  color: var(--muted);
+  font-size: var(--fs-small);
+}
+
+.estrellas[aria-invalid='true'] .estrella:not([data-llena='true']) {
+  color: var(--negative);
+}

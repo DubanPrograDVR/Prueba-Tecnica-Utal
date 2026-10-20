@@ -42,6 +42,14 @@ const TONOS: Record<string, Tono> = {
 /** Una categoría desconocida (datos nuevos) cae en un tono neutro. */
 export const tonoDe = (categoria: string) => TONOS[categoria] ?? NEUTRO
 
+const TONOS_PERSONA = [AZUL, VERDE, NARANJA, TEAL, ROSA, OLIVA, ARENA, AMBAR]
+
+/** Cada persona conserva su tono en toda la app: se deriva de su nombre. */
+export function tonoDePersona(nombre: string) {
+  const suma = [...nombre].reduce((acc, letra) => acc + letra.charCodeAt(0), 0)
+  return TONOS_PERSONA[suma % TONOS_PERSONA.length]
+}
+
 const CONECTORES = new Set(['y', 'de', 'del', 'la', 'el', 'los', 'las', '&'])
 
 /** "Kombucha Estudiantil #1" → "KE"; "Agrupación Danza y K-Pop (Campus Lircay) #9" → "DK" */

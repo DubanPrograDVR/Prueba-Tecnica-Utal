@@ -1,13 +1,31 @@
-.mosaico {
+.mosaico,
+.avatar {
   display: grid;
   flex: none;
   place-items: center;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-weight: 600;
+}
+
+.mosaico {
   width: 48px;
   height: 48px;
   border-radius: 10px; /* 20 de la tarjeta → 10 dentro */
-  background: var(--fondo);
-  color: var(--tinta);
   font-size: 15px;
-  font-weight: 600;
   letter-spacing: 0.02em;
+}
+
+.grande {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  font-size: 20px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: var(--fs-meta);
 }

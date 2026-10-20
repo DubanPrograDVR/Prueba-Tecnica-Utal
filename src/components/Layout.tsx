@@ -1,10 +1,10 @@
 import { faStore, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import type { CSSProperties, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { Link, NavLink } from 'react-router'
-import { iniciales } from '../lib/tonos'
 import { useDatos } from '../state/DatosContext'
 import s from './Layout.module.css'
+import { Avatar } from './Mosaico'
 
 // Un solo <nav>: barra lateral en escritorio, barra inferior en el teléfono (CSS).
 const SECCIONES = [
@@ -46,15 +46,7 @@ export function Layout({ children }: { children: ReactNode }) {
 
         {estudiante && (
           <div className={s.usuario}>
-            <span
-              className={s.avatar}
-              style={
-                { '--fondo': '#dcebfc', '--tinta': '#163f73' } as CSSProperties
-              }
-              aria-hidden="true"
-            >
-              {iniciales(estudiante.nombre)}
-            </span>
+            <Avatar nombre={estudiante.nombre} />
             <span className={s.datosUsuario}>
               <strong>{estudiante.nombre}</strong>
               <small>{campus?.nombre}</small>

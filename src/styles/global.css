@@ -164,6 +164,41 @@ textarea.input {
   border-color: var(--negative);
 }
 
+/* Etiqueta arriba del campo, 8px de separación; ayuda y error debajo. */
+.campo {
+  display: grid;
+  gap: 8px;
+}
+
+.campo > label,
+.etiqueta-campo {
+  font-size: var(--fs-small);
+  font-weight: 500;
+}
+
+.ayuda-campo {
+  color: var(--muted);
+  font-size: var(--fs-meta);
+}
+
+.error-campo {
+  color: var(--negative);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+}
+
+.acciones-formulario {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.formulario {
+  display: grid;
+  gap: 16px;
+}
+
 /* ── Pills (estado dentro de filas) ─────────────────────── */
 
 .pill {
