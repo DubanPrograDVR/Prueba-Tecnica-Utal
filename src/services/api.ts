@@ -19,18 +19,25 @@ export function obtenerDatos(): Promise<DatosIniciales> {
   return datosEnCurso
 }
 
+const SIN_CONEXION = 'Revisa tu conexión a internet e inténtalo de nuevo.'
+const DATOS_INVALIDOS =
+  'El servidor no entregó los datos esperados. Inténtalo de nuevo en unos minutos.'
+
 async function cargarDatos(): Promise<DatosIniciales> {
   try {
     const [respuesta] = await Promise.all([
       fetch(`${import.meta.env.BASE_URL}data/data.json`),
       esperar(),
     ])
-    if (!respuesta.ok)
-      throw new Error(`Error ${respuesta.status} al cargar los datos`)
+    // Un hosting de SPA responde 200 con index.html si el archivo falta:
+    // además de `ok` se exige que la respuesta sea JSON.
+    const esJson = respuesta.headers.get('content-type')?.includes('json')
+    if (!respuesta.ok || !esJson) throw new Error(DATOS_INVALIDOS)
     return (await respuesta.json()) as DatosIniciales
   } catch (error) {
     datosEnCurso = null // sin caché del fallo: "Reintentar" vuelve a pedir
-    throw error
+    // fetch lanza TypeError cuando no hay red; el resto se informa sin jerga técnica.
+    throw new Error(error instanceof TypeError ? SIN_CONEXION : DATOS_INVALIDOS)
   }
 }
 
