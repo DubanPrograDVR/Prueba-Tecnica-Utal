@@ -54,9 +54,13 @@ src/
   lib/                   Lógica pura: selectores, validaciones, contacto, formato, tonos
   hooks/useFiltrosUrl.ts Filtros de las listas guardados en la URL
   features/              emprendimientos/ y grupos/: páginas, filas y diálogos de cada módulo
-  components/            UI compartida: Layout, Dialog, Tabs, BarraFiltros, estrellas, estados
+  components/            UI compartida, una carpeta por componente con su .tsx y su .module.css
+    Dialog/              Dialog.tsx + Dialog.module.css
+    Layout/  Tabs/  BarraFiltros/  Estados/  EstrellasInput/  Calificacion/  Mosaico/  PaginaLista/
   styles/                tokens.css (diseño) y global.css (base y primitivas)
 ```
+
+Los módulos de `features/` no se importan entre sí: lo que comparten vive en `components/`, `lib/` y `state/`.
 
 Regla de dependencias: los componentes no conocen los servicios. Hay una excepción deliberada: los formularios que no modifican estado global (enviar un mensaje, pedir información) llaman directamente al servicio.
 

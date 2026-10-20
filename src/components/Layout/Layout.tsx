@@ -2,9 +2,9 @@ import { faStore, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import type { ReactNode } from 'react'
 import { Link, NavLink } from 'react-router'
-import { useDatos } from '../state/DatosContext'
+import { useDatos } from '../../state/DatosContext'
 import s from './Layout.module.css'
-import { Avatar } from './Mosaico'
+import { Avatar } from '../Mosaico/Mosaico'
 
 // Un solo <nav>: barra lateral en escritorio, barra inferior en el teléfono (CSS).
 const SECCIONES = [

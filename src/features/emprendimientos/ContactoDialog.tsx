@@ -1,6 +1,6 @@
 import { useId, useState, type FormEvent } from 'react'
 import { toast } from 'sonner'
-import { Dialog } from '../../components/Dialog'
+import { Dialog } from '../../components/Dialog/Dialog'
 import { enfocarPrimerError, validarMensaje } from '../../lib/validaciones'
 import { enviarMensaje } from '../../services/api'
 import { useDatosListos } from '../../state/DatosContext'

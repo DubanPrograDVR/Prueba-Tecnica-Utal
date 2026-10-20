@@ -1,7 +1,7 @@
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { memo, type CSSProperties } from 'react'
-import { Mosaico } from '../../components/Mosaico'
+import { Mosaico } from '../../components/Mosaico/Mosaico'
 import { nombreGrupo, plural } from '../../lib/formato'
 import type { GrupoIntermedio } from '../../types'
 import s from './GrupoFila.module.css'

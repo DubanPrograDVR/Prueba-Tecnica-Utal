@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { iniciales, tonoDe, tonoDePersona, type Tono } from '../lib/tonos'
+import { iniciales, tonoDe, tonoDePersona, type Tono } from '../../lib/tonos'
 import s from './Mosaico.module.css'
 
 const estilo = (tono: Tono) =>

@@ -5,10 +5,10 @@ import {
   useState,
   type CSSProperties,
 } from 'react'
-import { BarraFiltros } from '../../components/BarraFiltros'
-import { EstadoVacio } from '../../components/Estados'
-import lista from '../../components/PaginaLista.module.css'
-import { Tabs } from '../../components/Tabs'
+import { BarraFiltros } from '../../components/BarraFiltros/BarraFiltros'
+import { EstadoVacio } from '../../components/Estados/Estados'
+import lista from '../../components/PaginaLista/PaginaLista.module.css'
+import { Tabs } from '../../components/Tabs/Tabs'
 import { useFiltrosUrl } from '../../hooks/useFiltrosUrl'
 import { plural } from '../../lib/formato'
 import { estadoGrupo, filtrarGrupos, valoresUnicos } from '../../lib/selectores'

@@ -1,7 +1,7 @@
 import { faStar as faStarVacia } from '@fortawesome/free-regular-svg-icons'
 import { faStar, faStarHalfStroke } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { formatoPromedio, plural } from '../lib/formato'
+import { formatoPromedio, plural } from '../../lib/formato'
 import s from './Calificacion.module.css'
 
 /** Promedio compacto: "★ 4,5 · 2 reseñas", o "Sin reseñas" (nunca "0,0"). */

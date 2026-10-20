@@ -12,9 +12,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMemo, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router'
-import { Estrellas } from '../../components/Calificacion'
-import { NoEncontrado } from '../../components/Estados'
-import { Avatar, Mosaico } from '../../components/Mosaico'
+import { Estrellas } from '../../components/Calificacion/Calificacion'
+import { NoEncontrado } from '../../components/Estados/Estados'
+import { Avatar, Mosaico } from '../../components/Mosaico/Mosaico'
 import { canalesDeContacto, type TipoCanal } from '../../lib/contacto'
 import { formatoFecha, formatoPromedio, plural } from '../../lib/formato'
 import {

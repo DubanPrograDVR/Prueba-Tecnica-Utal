@@ -1,6 +1,6 @@
 import { useId, useState, type FormEvent } from 'react'
 import { toast } from 'sonner'
-import { EstrellasInput } from '../../components/EstrellasInput'
+import { EstrellasInput } from '../../components/EstrellasInput/EstrellasInput'
 import {
   enfocarPrimerError,
   validarValoracion,
