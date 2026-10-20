@@ -56,6 +56,27 @@ export async function inscribirEnGrupo(_grupoId: string): Promise<void> {
   await esperar()
 }
 
+/** Simula `POST /emprendimientos/:id/mensajes`. No cambia el estado global. */
+export async function enviarMensaje(
+  _emprendimientoId: string,
+  _mensaje: string,
+): Promise<void> {
+  await esperar()
+}
+
+export interface SolicitudInfo {
+  motivo: string
+  mensaje: string
+}
+
+/** Simula `POST /grupos/:id/solicitudes`. No cambia el estado global. */
+export async function enviarSolicitudInfo(
+  _grupoId: string,
+  _solicitud: SolicitudInfo,
+): Promise<void> {
+  await esperar()
+}
+
 // Fecha local en formato AAAA-MM-DD (toISOString usaría UTC y en Chile
 // podría marcar el día siguiente por la noche).
 function hoy() {
