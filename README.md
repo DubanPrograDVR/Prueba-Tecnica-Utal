@@ -149,6 +149,11 @@ Supuestos:
 - **Identidad visual:** rojo institucional `#c00418` y tipografía Inter, tomados de la hoja de estilos de utalca.cl.
 - **Estilo de pantallas de aplicación** ("pastel consumer") con reglas explícitas: sin degradados, sin sombras en elementos en reposo, el color reservado para los datos y la acción principal.
 - **Ningún emprendimiento trae fotos.** Por eso cada uno se identifica con sus iniciales sobre el tinte pálido de su categoría. El color refuerza, pero el nombre de la categoría siempre aparece también como texto.
+- **Las categorías y temáticas se filtran con chips de su propio tinte**, y cada chip muestra un conteo que sigue a los demás filtros. Así el rasgo visual de la app es también la forma de navegarla. La barra de ocupación de cada grupo toma el tono de su temática.
+- **Microinteracciones (principios de Emil Kowalski):**
+  - El relleno del corazón crece desde el centro y el del marcador baja como una cinta. Ambos usan transiciones CSS, que se pueden interrumpir y no se ejecutan al cargar la página.
+  - El latido del ícono, el anillo del "me gusta", el contador que se desliza y la cascada de las estrellas usan la Web Animations API y solo se disparan con un clic de puntero; con teclado no hay latido.
+  - Solo se animan `transform` y `opacity`, siempre en menos de 300 ms, y se respeta `prefers-reduced-motion`.
 - **Accesibilidad:** todo el texto supera un contraste de 4,5:1. Los toggles usan `aria-pressed`. Las pestañas siguen el patrón WAI-ARIA con flechas del teclado. Las estrellas son radios reales. Los errores van asociados a su campo y el foco pasa al primero. Las zonas táctiles miden al menos 44 px, los inputs usan 16 px para que iOS no haga zoom, y hay un enlace "Saltar al contenido".
 
 ## Pruebas
